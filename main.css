@@ -39,16 +39,16 @@ canvas {
 .instructions {
     position: absolute;
     background-color: #0d0e0f85;
-    color: white;
+    color: rgba(255, 255, 255, 0.527);
     top: 10px;
     width: 21%;
     left: 10px;
     padding: 20px;
     text-align: center;
-    font-size: 16px;
+    font-size: 15.4px;
     font-weight: 550;
     border: #303436 2px solid;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: cursive;
 }
 
 button {
