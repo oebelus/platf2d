@@ -44,7 +44,7 @@ class Platform {
     }
 }
 
-var ground = new Platform(0, canvas.height/1.15, canvas.width, canvas.height-canvas.height/3, "white")
+var ground = new Platform(0, canvas.height/1.15, canvas.width, canvas.height-canvas.height/3, "#0D0E0F")
 
 function overlaps(a, b) {
     return a.positition.y < b.positition.y + b.height &&
