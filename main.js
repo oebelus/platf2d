@@ -21,7 +21,7 @@ function resetGameState() {
     platforms = generatePlatforms(10)
     coins = generateCoins(5)
     player = new Player(100, canvas.height/1.265, 50, 50);
-    score.innerHTML = `SCORE: 00`
+    score.innerHTML = `COINS: 00`
     level.innerHTML = `LEVEL: 00`
 }
 
@@ -32,7 +32,7 @@ const gravity = 0.2
 
 class Platform {
     constructor(x, y, w, h, color) {
-        this.positition = {
+        this.position = {
             x: x,
             y: y,
         }
@@ -42,15 +42,15 @@ class Platform {
     }
     draw() {
         ctx.fillStyle = this.color
-        ctx.fillRect(this.positition.x, this.positition.y, this.width, this.height)
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 }
 
 var ground = new Platform(0, canvas.height/1.15, canvas.width, canvas.height-canvas.height/3, "#0D0E0F")
 
 function overlaps(a, b) {
-    return a.positition.y < b.positition.y + b.height &&
-           a.positition.y + a.height > b.positition.y;
+    return a.position.y < b.position.y + b.height &&
+           a.position.y + a.height > b.position.y;
 }
 
 function generatePlatforms(n) { // canvas.height-220
@@ -76,7 +76,7 @@ var platforms = generatePlatforms(10)
 
 class Door {
     constructor(x, y, w, h, color) {
-        this.positition = {
+        this.position = {
             x: x,
             y: y,
         }
@@ -86,7 +86,7 @@ class Door {
     }
     draw() {
         ctx.fillStyle = this.color
-        ctx.fillRect(this.positition.x, this.positition.y, this.width, this.height)
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 }
 
@@ -148,6 +148,7 @@ class Player {
         }
         this.jump = false
         this.score = 0
+        this.level = 0
     }
     draw() {
         ctx.fillStyle = this.color
@@ -161,23 +162,23 @@ class Player {
         let length = platforms.length
         for (let i = 0; i < length; i++) {
             let p = platforms[i]
-            let colliding = this.x < p.positition.x + p.width &&
-                this.x + this.w > p.positition.x &&
-                this.y < p.positition.y + p.height &&
-                this.y + this.h > p.positition.y 
+            let colliding = this.x < p.position.x + p.width &&
+                this.x + this.w > p.position.x &&
+                this.y < p.position.y + p.height &&
+                this.y + this.h > p.position.y 
                 if (colliding) {
-                    if (this.y < p.positition.y + p.height && this.y + this.h > p.positition.y + p.height) {
+                    if (this.y < p.position.y + p.height && this.y + this.h > p.position.y + p.height) {
                         
-                        this.y = p.positition.y + p.height
+                        this.y = p.position.y + p.height
                     }
-                    else if (this.y < p.positition.y + p.height && this.y + this.h > p.positition.y) {
-                        this.y = p.positition.y - p.height
+                    else if (this.y < p.position.y + p.height && this.y + this.h > p.position.y) {
+                        this.y = p.position.y - p.height
                     }
-                    else if ( this.x < p.positition.x + p.width && this.x + this.w > p.positition.x) {
+                    else if ( this.x < p.position.x + p.width && this.x + this.w > p.position.x) {
                         this.x += 20
                     }
-                    else if (this.x < p.positition.x + p.width &&
-                        this.x + this.w > p.positition.x) {
+                    else if (this.x < p.position.x + p.width &&
+                        this.x + this.w > p.position.x) {
                             this.x -= 20
                         }
                 this.velocity.x = 0
@@ -204,23 +205,24 @@ class Player {
                             this.y + this.h > c.position.y;
             if (colliding) {
                 this.score++
-                score.innerHTML = `SCORE: ${this.score}`
+                score.innerHTML = `COINS: ${this.score}`
                 coins.splice(i, 1)
                 console.log(coins)
                 i--;
             }
-            console.log(this.score)
         }
-
-        let count = 0;
-        if (player.x > canvas.width - 80) {
+    }
+    
+    door() {
+        if (player.x > door.position.x && player.x < door.position.x + door.width &&
+            player.y > door.position.y && player.y < door.position.y + door.height) {
             platforms = generatePlatforms(10)
             coins = generateCoins(5)
-            count++
-            level.innerHTML = `LEVEL: ${count}`
+            this.level++
+            console.log("stage", this.level)
+            level.innerHTML = `LEVEL: ${this.level}`
             player.x = 100
         }
-        
     }
 }
 
@@ -314,9 +316,11 @@ function animate() {
     }
     player.update()
 
+    
     if (coins.length == 0) {
         door.draw()
-        
+        platforms = generatePlatforms(0)
+        player.door(player.level)
     }
 
     animationId = requestAnimationFrame(animate);
