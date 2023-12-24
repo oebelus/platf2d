@@ -1,0 +1,1 @@
+Just a boring platformer 1 page game with randome generation of everything to practice a bit (not completed yet)

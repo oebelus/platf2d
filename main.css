@@ -1,0 +1,67 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+canvas {
+    height: 100%;
+    width: 100%;
+    background: black;
+    overflow: hidden;
+}
+
+.footer {
+    display: flex;
+    background-color: red;
+}
+
+.score, .level {
+    position: absolute;
+    color: white;
+    background-color: black;
+    text-align: center;
+    padding: 10px;
+    bottom: 14px;
+    border-radius: 3%;
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.score {
+    right: 10px;
+}
+
+.level {
+    left: 10px;
+}
+
+.instructions {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.568);
+    top: 10px;
+    width: 21%;
+    left: 10px;
+    padding: 20px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 550;
+    border: white 2px solid;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+button {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    background-color: black;
+    border: transparent 1px solid;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 5px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    cursor: pointer;
+}
