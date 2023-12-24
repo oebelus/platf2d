@@ -21,6 +21,8 @@ function resetGameState() {
     platforms = generatePlatforms(10)
     coins = generateCoins(5)
     player = new Player(100, canvas.height/1.265, 50, 50);
+    score.innerHTML = `SCORE: 00`
+    level.innerHTML = `LEVEL: 00`
 }
 
 canvas.width = innerWidth
@@ -52,7 +54,7 @@ function overlaps(a, b) {
 }
 
 function generatePlatforms(n) { // canvas.height-220
-    let colors = ["yellow", "red", "green", "cyan", "orange", "pink", "purple"];
+    let colors = ["#434242", "#5F8670", "#9BABB8", "#CD8D7A", "#BB9CC0", "#BB9CC0"];
     let platforms = [];
     for (let i = 0; i < n; i++) {
         let x = Math.floor(Math.random() * (canvas.width - 300)) + 300
@@ -88,7 +90,7 @@ class Door {
     }
 }
 
-var door = new Door(canvas.width - 110, 360, 100, 200, "white")
+var door = new Door(canvas.width - 110, 352, 100, 200, "white")
 
 class Coin {
     constructor(x, y) {
@@ -210,17 +212,19 @@ class Player {
             console.log(this.score)
         }
 
-        let count = 1;
-        if (this.x == door.x + 20) {
-            count++
+        let count = 0;
+        if (player.x > canvas.width - 80) {
             platforms = generatePlatforms(10)
-            coins = generateCoins(10)
+            coins = generateCoins(5)
+            count++
             level.innerHTML = `LEVEL: ${count}`
+            player.x = 100
         }
+        
     }
 }
 
-var player = new Player(100, canvas.height/1.265, 50, 50)
+var player = new Player(100, canvas.height/1.269, 50, 50)
 
 const keys = {
     right: {
@@ -312,7 +316,8 @@ function animate() {
 
     if (coins.length == 0) {
         door.draw()
-    } 
+        
+    }
 
     animationId = requestAnimationFrame(animate);
 }

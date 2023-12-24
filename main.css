@@ -66,3 +66,10 @@ button {
     font-size: 30px;
     cursor: pointer;
 }
+
+@media only screen and (max-width: 1000px) {
+    .instructions {
+        width: 30%;
+        font-size: 15px;
+    }
+}
