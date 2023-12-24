@@ -48,7 +48,7 @@ canvas {
     font-size: 15.4px;
     font-weight: 550;
     border: #303436 2px solid;
-    font-family: cursive;
+    font-family: monospace;
 }
 
 button {
