@@ -144,7 +144,7 @@ class Player {
         this.color = "cyan"
         this.velocity = {
             x: 0,
-            y: 1
+            y: 0
         }
         this.jump = false
         this.score = 0
@@ -187,15 +187,25 @@ class Player {
             }
         }
 
+        // The ground 
         if (this.y + this.h + this.velocity.y >= canvas.height/1.15) {
             this.velocity.y = 0
             this.jump = false
-        } else if (this.y < 0) {
+        } 
+        // Upper Bound
+        else if (this.y < 0) {
             this.y = 0
             this.velocity.y += gravity
             this.jump = true
         }
         else this.velocity.y += gravity
+
+        if (this.x < 0) {
+            this.x = 2
+            this.velocity.x += 1
+        } else if (this.x + this.w >= innerWidth) {
+            this.x = innerWidth-60;
+        }
 
         for (let i = 0; i < coins.length; i++) {
             let c = coins[i]
@@ -235,9 +245,6 @@ const keys = {
     left: {
         pressed: false
     }, 
-    up: {
-        pressed: false
-    },
     space: {
         pressed: false
     }
@@ -246,13 +253,6 @@ const keys = {
 // Function to update the rectangle's position
 function move(e) {
     switch(e.key) {
-        case 'ArrowUp':
-            keys.up.pressed = true
-            player.y -= 10;
-            break;
-        case 'ArrowDown':
-            player.y += 10;
-            break;
         case 'ArrowLeft':
             keys.left.pressed = true
             player.x -= 10;
@@ -267,18 +267,12 @@ function move(e) {
                 keys.space.pressed = true
                 player.jump = true
             }
-            /*setTimeout(() => { player.y += 200; }, 150);*/
             break
     }
 }
 
 function down(e) {
     switch(e.key) {
-        case 'ArrowUp':
-            keys.up.pressed = false;
-            break
-        case 'ArrowDown':
-            break;
         case 'ArrowLeft':
             keys.left.pressed = false;
             break
@@ -288,7 +282,6 @@ function down(e) {
         case ' ':
             keys.space.pressed = false;
             player.jump = false
-            
     }
 }
 
@@ -315,7 +308,7 @@ function animate() {
         coin.update()
     }
     player.update()
-
+    console.log(player.x)
     
     if (coins.length == 0) {
         door.draw()
